@@ -20,3 +20,16 @@ describe('AppController', () => {
     });
   });
 });
+
+/*
+The test file verifies that your controller works correctly.
+
+✅ What it does:
+
+Tests the getHello() method
+
+Checks if it returns the expected string
+
+Ensures your app is working
+*/
+

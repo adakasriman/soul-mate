@@ -10,3 +10,18 @@ export class AppController {
     return this.appService.getHello();
   }
 }
+
+/*
+The controller handles HTTP requests and responses.
+
+✅ What it does:
+
+Maps routes (endpoints)
+
+Calls services
+
+Returns data to clients
+
+Connects the outside world to your app
+*/
+

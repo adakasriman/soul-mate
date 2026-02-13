@@ -9,21 +9,21 @@ import { users } from '@database/schema/user.schema';
 import { RegisterDto } from './dto/register.dto';
 import * as bcrypt from 'bcrypt';
 import { schema } from '@database/schema';
+import { AuthRepository } from './auth.repository';
 
 @Injectable()
 export class AuthService {
   constructor(
     @Inject('DRIZZLE')
     private readonly db: NodePgDatabase<typeof schema>,
+    private readonly repo: AuthRepository,
   ) {}
 
   // 🔹 REGISTER
   async register(dto: RegisterDto) {
     const { name, email, password } = dto;
 
-    const existingUser = await this.db.query.users.findFirst({
-      where: (u, { eq }) => eq(u.email, email),
-    });
+    const existingUser = await this.repo.findByEmail(dto.email);
 
     if (existingUser) {
       throw new BadRequestException('Email already exists');
@@ -74,6 +74,7 @@ export class AuthService {
         id: user.id,
         name: user.name,
         email: user.email,
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         role: user.role,
       },
     };
